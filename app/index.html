@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Product list</title>
+    <link href="app-content/app.css" rel="stylesheet" />
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body class="container">
+    <!-- header -->
+    <header>
+        <ul class="nav nav-tabs">
+            <li><a href="/login" target="_self">Logout</a></li>
+        </ul>
+        <div class="flash-message" ng-if="flash">
+            <div class="{{'alert alert-' + flash.type}}" ng-bind="flash.message"></div>
+        </div>
+    </header>
+
+    <!-- main -->
+    <main ui-view></main>
+	<div ng-controller="AppCtrl">
+		<div id="headerApp">
+			<div ng-click="showBlockProduct = !showBlockProduct">Показать продукты</div>
+			<div id = "addform">Добавить продукт</div>
+			<div>mikeleilyash@gmail.com</div>
+		</div>
+		<form class="form" id="contactAdd" >
+			<h3>Форма товара</h3>
+			<hr/><br/>
+			<label>Название: </label>
+			<br/>
+			<input type="text" id="name" placeholder="Название товара" maxlength="25" ng-model="contact.name"/><br/>
+			<br/>
+			<label>Цена: </label>
+			<br/>
+			<input type="text" id="price" placeholder="Цена" maxlength="25" ng-model="contact.price"/><br/>
+			<br/>
+			<label>Описание товара :</label>
+			<br/>
+			<textarea type="text" id="descr" placeholder="Описание товара" ng-model="contact.description"></textarea><br/>
+			<br/>
+			<label>Создан :</label>
+			<br/>
+			<input type="text" id="createdBy" placeholder="кем создан товар" maxlength="25" ng-model="contact.createdBy"/><br/>
+			<br/>
+			<br/>
+			<button id="add" class="btn btn-primary" ng-click="addContact()">Добавить</button>
+			<button id="cancel" class="btn btn-danger" ng-click="deselect()">Отменить</button>
+			<br/>
+		</form>
+		<div id="myTable" ng-show="showBlockProduct">
+			<div id="title2">
+				<div>№</div>
+				<div>
+					<a href="" ng-click="predicate = 'name'; reverse=!reverse">Название</a>
+				</div>
+				<div>
+					<a href="" ng-click="predicate = 'price'; reverse=!reverse">Цена</a>
+				</div>
+				<div>
+					<a href="" ng-click="predicate = 'createdBy'; reverse=!reverse">Создан :</a>
+				</div>
+			</div>
+			<div class='rept' ng-repeat="contact in product | orderBy:predicate:reverse">
+				<div>{{ $index + 1 }}</div>
+				<div>{{contact.name}}</div>
+				<div>{{contact.price}}</div>
+				<div>{{contact.createdBy}}</div>
+				<div><button class="redact btn btn-warning" ng-click="edit(contact._id)">Показать товар детально</button></div>
+			</div>					
+		</div>
+		
+	</div>
+    <!-- footer -->
+    <footer></footer>
+
+    <!-- external scripts -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
+
+    <!-- application scripts -->
+    <script src="app.js"></script>
+    <script src="app-services/user.service.js"></script>
+    <script src="app-services/flash.service.js"></script>
+    <script src="home/index.controller.js"></script>
+	<script src="home/script/myquery.js"></script>
+    <script src="account/index.controller.js"></script>
+</body>
+</html>
